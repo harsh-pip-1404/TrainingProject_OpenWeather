@@ -1,0 +1,19 @@
+version: "3"
+
+tasks:
+  default:
+    cmd: task --list-all
+    silent: true
+  
+  play-ui: sbt "run 8080"
+  openweather-producer:
+    dir: openweather
+    cmd: sbt "run"
+  platform-components: docker compose up -d --build --remove-orphans
+
+  up:
+    deps:
+      - play-ui
+      - platform-components
+    cmds:
+      - echo "All services are up and running"
